@@ -5,7 +5,7 @@ make code of  quickly toooooo much
 
 ###  npm i -D sass-resources-loader
 
-### vue.config.js中写入一下代码
+### vue.config.js中写入以下代码
 ```
      module.exports = {
        css: {
