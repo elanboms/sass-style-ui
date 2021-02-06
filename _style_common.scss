@@ -1,0 +1,331 @@
+/*!
+ * 全局样式表
+ * @Date: 2020-10-18 17:00:00 
+ * @Last Modified time: 2020-10-22 08:40:53 
+ */
+ @charset "UTF-8";
+//  *{ padding: 0; margin: 0; box-sizing: border-box; }
+//  html,body{margin: 0;padding: 0;}
+ img{ flex-shrink: 0; }
+ 
+ /*!
+  *  全局单位 $unit ( 1px or 0.01rem )
+  */
+ $unit: 1px ;
+ 
+ // 颜色
+ $colors:(
+   "main":#0366d6,
+   "dark":#000,
+   "white":#fff,
+   "gray":#999999,
+   '1a':#1a1a1a,
+   "33":#333333,
+   "66":#666666,
+   "77":#777777,
+   "88":#888888,
+   "99":#999999,
+ );
+ 
+ // 对齐方式
+ $textAlign: (
+   "l":left,
+   "c":center,
+   "r":right
+ );
+ 
+ // 字体颜色&背景色
+ @each $key,$item in $colors {
+   .c-#{$key} {
+     color: $item ;
+   }
+   .bg-#{key} {
+     background-color: $item ;
+   }
+ }
+ 
+ //字体对齐方式 .t-r{text-align:right}
+ @each $key,$item in $textAlign { 
+   .t-#{$key}{
+     text-align:$item;
+   }
+ }
+ 
+ /*
+ * 字体大小使用 .f-12{font-size:12px}
+ */
+ @for $size from 12 to 72 {
+   @if $size % 2 == 0 {
+     .f-#{$size} {
+       font-size: $size * $unit;
+     }
+   }
+ }
+ @mixin elli {
+   overflow: hidden;
+   text-overflow:ellipsis; 
+   white-space: nowrap;
+ }
+ // 文字超出省略号
+ @mixin elli-num($lineNum:2) {
+   max-width: 100%;
+   text-overflow: -o-ellipsis-lastline;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   overflow: hidden;
+   -webkit-box-orient: vertical;
+   -webkit-line-clamp: $lineNum ;
+   line-clamp: $lineNum ;
+ }
+ .elli {
+   @include elli;
+ }
+ // 超出省略
+ @for $num from 1 through 5 { 
+   .elli-#{$num} {
+     @include elli-num($num);
+   }
+ }
+ 
+ /* 内外边距类名生成
+  * .mt-5{margin-top:5px;}
+  * .mr-5{margin-right:5px;}
+  * .mb-5{margin-bottom:5px;}
+  * .ml-5{margin-right:5px;}
+  * .mx-5{margin-left:5px;margin-right:5px;}
+  * .my-5{margin-top:5px;margin-bottom:5px;}
+  */
+ $arrows:(
+   't':top,
+   'r':right,
+   'l':left,
+   'b':bottom,
+ );
+ 
+ $spaceTypes:(
+   'm':margin,
+   'p':padding,
+ );
+ 
+ @each $arrowKey,$arrow in $arrows {
+   @each $typeKey,$type in $spaceTypes {
+     @for $num from 5 through 50 {
+       @if $num % 5 == 0 {
+         .#{$typeKey}#{$arrowKey}-#{$num} {
+           #{$type}-#{$arrow}: $num * $unit;
+         }
+       }
+     }
+   }
+ }
+ 
+ @for $num from 5 through 50 {
+   @each $typeKey,$type in $spaceTypes {
+     @if $num % 5 == 0 {
+         .#{$typeKey}x-#{$num} {
+           #{$type}-left: $num * $unit;
+           #{$type}-right: $num * $unit;
+         }
+         .#{$typeKey}y-#{$num} {
+           #{$type}-top: $num * $unit;
+           #{$type}-bottom: $num * $unit;
+         }
+     }
+   }
+ }
+ 
+ /* 线条&分割线 */
+ @for $num from 2 through 10 {
+   @if $num % 2 == 0 {
+     .hr-#{$num} {
+       width: 100%;
+       height: $num * $unit;
+       background-color: #F7F7F7;
+     }
+   } 
+ }
+ 
+ @each $arrowKey,$arrow in $arrows {
+   .b-#{$arrowKey} {
+     border-#{$arrow}: 1px solid #eee;
+   }
+ }
+ 
+ // 栅格布局
+ @function layoutPercent($percent){
+   @return   percentage( $percent / 24 )   ;
+ }
+ 
+ @for $item from 1 through 24 {
+   .col-#{$item} {
+     width: layoutPercent($item) !important;
+     flex-shrink: 0;
+     display: inline-block;
+   }
+ }
+ 
+ /* 弹性盒子 */
+ .flex {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   // flex-flow: row wrap;
+ }
+ 
+ .flex-dir-row {
+   display: flex;
+   flex-direction: row;
+ }
+ 
+ .flex-dir-col {
+   display: flex;
+   flex-direction: column;
+ }
+ 
+ //x轴对齐方式
+ $flexItems:(
+   "s":flex-start,
+   "c":center,
+   "e":flex-end,
+   "b":space-between,
+   "a":space-around,
+ );
+ 
+ @each $key,$item in $flexItems {
+   .flex-x-#{$key} {
+     display: flex;
+     justify-content: $item;
+   }
+ }
+ 
+ 
+ .flex-y-s {
+   display: flex;
+   align-items: flex-start;
+ }
+ 
+ .flex-y-st {
+   display: flex;
+   align-items: stretch;
+ }
+ 
+ .flex-y-c {
+   display: flex;
+   align-items: center;
+ }
+ 
+ .flex-y-e {
+   display: flex;
+   align-items: flex-end;
+ }
+ 
+ .flex-self-s {
+   align-self: flex-start;
+ }
+ 
+ .flex-self-c {
+   align-self: center;
+ }
+ 
+ .flex-self-e {
+   align-self: flex-end;
+ }
+ 
+ .flex-c {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+ }
+ 
+ .flex-k {
+   flex-shrink: 0;
+ }
+ 
+ .flex-1{
+   flex: 1;
+ }
+ 
+ .flex-wrap {
+   display: flex;
+   flex-wrap: wrap;
+ }
+ 
+ .flex-nowrap {
+   display: flex;
+   flex-wrap: nowrap;
+ }
+ 
+ // 字体
+ .bold {
+   font-weight: bold;
+ }
+ .nobold{
+   font-weight: normal;
+ }
+ 
+ .fixed {
+   position: fixed;
+ }
+ 
+ .relative {
+   position: relative;
+ }
+ 
+ .absolute {
+   position: absolute;
+ }
+ 
+ 
+ /**
+  *  定义滚动条样式 圆角和阴影不需要则传入null
+  *	1、$outColor -- 滚动条颜色
+  *	2、$innerColor -- 滑块颜色
+  *	3、$height -- 滚动条宽高、圆角
+  *	4、$width
+  *	5、$radius
+  *	6、$shadow -- 阴影
+ */
+  @mixin scrollBar($width:5px,$height:10px,$outColor:#e6e6e6,$innerColor:$mainColor,$radius:5px,$shadow:null) {
+   /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+   &::-webkit-scrollbar {
+     width: $width;
+     height: $height;
+     background-color: $outColor;
+   }
+  
+   /*定义滚动条轨道 内阴影+圆角*/
+   &::-webkit-scrollbar-track {
+     @if ($shadow!=null) {
+       -webkit-box-shadow: $shadow;
+     }
+     @if ($radius!=null) {
+       border-radius: $radius;
+     }
+     background-color: $outColor;
+   }
+  
+   /*定义滑块 内阴影+圆角*/
+   &::-webkit-scrollbar-thumb {
+     @if ($shadow!=null) {
+       -webkit-box-shadow: $shadow;
+     }
+     @if ($radius!=null) {
+       border-radius: $radius;
+     }
+     background-color: $innerColor;
+     border: 1px solid $innerColor;
+   }
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
